@@ -45,7 +45,7 @@ const Main = props => {
               </Toolbar>
               
             </AppBar>
-            <Board />
+            <Board accountName={props.accountName}/>
          </>
     ;
   

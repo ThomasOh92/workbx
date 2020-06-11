@@ -2,3 +2,29 @@ body{
   height: 100%;
 }
 
+.box{
+  width: fit-content;
+  margin-right: 0;
+  border: 1px solid grey;
+}
+
+.resizeable{
+  resize: both;
+}
+
+.deleteButton{
+  float: right;
+}
+
+.textbox{
+  resize: none;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit
+}
+
+.textbox:focus{
+  outline: none;
+  border: none;
+}
