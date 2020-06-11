@@ -1,5 +1,6 @@
 const {resolve} = require('path');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -15,6 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
+
+app.use(cookieParser());
+
 
 // Set react-views to be the default view engine
 const reactEngine = require('express-react-views').createEngine();

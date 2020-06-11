@@ -1,12 +1,18 @@
 import React from 'react';
 import Draggable from 'react-draggable';
 import { FormControl, Input } from '@material-ui/core';
-import styles from './style.scss';
-import { grey } from '@material-ui/core/colors';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
 import ClearIcon from '@material-ui/icons/Clear';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import styles from './style.scss';
 
-class StickyNote extends React.Component {
+class WebLink extends React.Component {
    
     constructor(props){
         super(props);
@@ -14,17 +20,13 @@ class StickyNote extends React.Component {
             activeDrags: false,
             controlledPosition: this.props.position
         };
-        console.log(this.state.controlledPosition)
         this.onControlledDrag = this.onControlledDrag.bind(this);
         this.onStart = this.onStart.bind(this);
         this.onStop = this.onStop.bind(this);
         this.onControlledDragStop = this.onControlledDragStop.bind(this);
         this.deleteButton = this.deleteButton.bind(this);
-        this.handleContentChange = this.handleContentChange.bind(this);
-
     }
 
-  
     onStart() {
       this.setState({activeDrags: true});
     };
@@ -32,30 +34,22 @@ class StickyNote extends React.Component {
     onStop(){
         this.setState({activeDrags: false});
         //push the controlled position up to state in board
-        this.props.updatePosition(this.props.id, this.state.controlledPosition)
+        this.props.updateWebLinkPosition(this.props.id, this.state.controlledPosition)
     };
   
     onControlledDrag(e, position){
-        e.preventDefault();
-        e.stopPropagation();
         const {x, y} = position;
         this.setState({controlledPosition: {x, y}});
     };
     
     onControlledDragStop(e, position){
-        e.preventDefault();
-        e.stopPropagation();
         this.onControlledDrag(e, position);
         this.onStop();
     };
 
     deleteButton(){
         console.log("delete!")
-        this.props.deleteStickyNote(this.props.id)
-    }
-
-    handleContentChange(event){
-        this.props.handleContentChange(this.props.id, event.target.value)
+        this.props.deleteWebLink(this.props.id)
     }
     
     render() {
@@ -63,21 +57,24 @@ class StickyNote extends React.Component {
         const controlledPosition = this.state.controlledPosition;
 
         return (
-            <Draggable position={controlledPosition} bounds="parent" handle=".dragger" {...dragHandlers} >
+            <Draggable position={controlledPosition} bounds="parent" cancel=".linkypart" {...dragHandlers} >
                 <div className={styles.box}>
-                <div className="dragger">
-                    <DragHandleIcon />
+
+                <Card>
                     <ClearIcon className={styles.deleteButton} onClick={this.deleteButton}/>
-                </div>
-                <textarea className={styles.textbox} 
-                          rows="4"
-                          onChange={this.handleContentChange}
-                          value={this.props.content}/>
+                    <CardActionArea onClick={()=>{window.open(this.props.title, '_blank')}} >
+                        <CardContent className="linkypart">
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            {this.props.title}
+                        </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
                 </div>
             </Draggable>            
         );
     }
 }
 
-export default StickyNote;
+export default WebLink;
 //consider using something called react resizable

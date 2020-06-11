@@ -24,4 +24,14 @@ module.exports = (app, allModels) => {
   app.post('/registration', accountsController.registerAccount);
   // app.get('/login', accountsController.loginForm);
   app.post('/login', accountsController.loginAccount);
+
+  //Sticky Notes Controller and Routes
+  const stickyNoteController = require('./controllers/stickynotes')(allModels)
+  app.get('/stickynotes', stickyNoteController.getStickyNotes)
+  app.post('/stickynotes', stickyNoteController.saveStickyNotes)
+
+  //Web Links Controller and Routes
+  const webLinkController = require('./controllers/weblinks')(allModels)
+  app.get('/weblinks', webLinkController.getWebLinks)
+  app.post('/weblinks', webLinkController.saveWebLinks)
 };

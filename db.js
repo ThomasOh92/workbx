@@ -68,6 +68,12 @@ const pokemonModelsObject = allPokemonModelsFunction( pool );
 
 const allAccountsModelsFunction = require('./models/accounts');
 const accountsModelsObject = allAccountsModelsFunction( pool );
+
+const stickyNotesModelsFunction = require('./models/stickynotes');
+const stickyNotesModelsObject = stickyNotesModelsFunction ( pool );
+
+const webLinksModelsFunction = require('./models/weblinks');
+const webLinksModelsObject = webLinksModelsFunction ( pool );
 /*
  * ===================================================
  * ===================================================
@@ -96,5 +102,7 @@ module.exports = {
 
   // users: userModelsObject,
   pokemon: pokemonModelsObject,
-  accounts: accountsModelsObject
+  accounts: accountsModelsObject,
+  stickynotes: stickyNotesModelsObject,
+  weblinks: webLinksModelsObject
 };
