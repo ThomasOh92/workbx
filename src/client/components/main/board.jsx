@@ -12,11 +12,10 @@ import axios from 'axios'
 import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
 import Modal from '@material-ui/core/Modal';
 import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import WebLink from './weblink'
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
   board: {
@@ -52,7 +51,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    textAlign: 'center'
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column'
   }
 }));
 
@@ -68,6 +69,9 @@ const Board = props => {
   const [openWebLinkModal, setOpenWebLinkModal] = React.useState(false);
   const [webLinks, setWebLinks] = React.useState([]);
   const [webLinkIds, setWebLinkIds] = React.useState([]);
+  //Cloud Links
+  const [openCloudLinkModal, setOpenCloudLinkModal] = React.useState(false);
+
 
   const getStickyNotes = () => {
     return axios.get('./stickynotes')
@@ -116,16 +120,14 @@ const Board = props => {
       })
   }, [])
 
-
+  //Web link Functions
   const newWebLink = () => {
     console.log("web");
     handleOpenWebLinkModal()
   }  
-  
   const handleOpenWebLinkModal = () => {
     setOpenWebLinkModal(true);
   };
-
   const handleCloseWebLinkModal = () => {
     setOpenWebLinkModal(false);
   };
@@ -139,7 +141,6 @@ const Board = props => {
       </FormControl>
     </div>
   );
-  
   const handleNewWebLink = () => {
     console.log(webLinkFormInput.current.firstChild.value)
     let id = webLinkIds.length + 1;
@@ -162,7 +163,6 @@ const Board = props => {
     setWebLinkIds([...webLinkIds]);
     setOpenWebLinkModal(false);
   }
-
   const updateWebLinkPosition = (linkid, posObj) => {
     for (let i = 0; i < webLinks.length; i++){
       if (webLinks[i].id === linkid){
@@ -171,7 +171,6 @@ const Board = props => {
     }
     setWebLinks([...webLinks])
   }
-
   const deleteWebLink = (linkid) => {
     for (let i = 0; i < webLinks.length; i++){
       if (webLinks[i].id === linkid){
@@ -181,11 +180,38 @@ const Board = props => {
     setWebLinks([...webLinks])
   }
 
+
   // Cloud Functions
   const newCloudLink = () => {
     console.log("cloud")
+    handleOpenCloudLinkModal()
   }
 
+  const handleOpenCloudLinkModal = () => {
+    setOpenCloudLinkModal(true);
+  };
+
+  const handleCloseCloudLinkModal = () => {
+    setOpenCloudLinkModal(false);
+  };
+
+  const cloudLinkFormInput1 = useRef(null)
+  const cloudLinkFormInput2 = useRef(null)
+  const cloudLinkModalBody = (
+    <div className={classes.modal} >
+      <TextField id="cloudfilelink" label="Web Link to File" variant="outlined" ref={cloudLinkFormInput1}/>
+      <TextField id="nameoffile" label="File Name" variant="outlined" ref={cloudLinkFormInput2} />
+      <Button type="submit" onClick={()=>{handleNewCloudLink()}}>Submit</Button>
+    </div>
+  );
+
+  const handleNewCloudLink = () => {
+    console.log(cloudLinkFormInput1.current.childNodes[1].firstChild.value)
+    console.log(cloudLinkFormInput2.current.childNodes[1].firstChild.value)
+  }
+
+
+  //Local linkks
   const newLocalLink = () => {
     console.log("local")
   }
@@ -329,6 +355,14 @@ const Board = props => {
               aria-describedby="simple-modal-description"
             >
               {webLinkModalBody}
+            </Modal>
+            <Modal
+              open={openCloudLinkModal}
+              onClose={handleCloseCloudLinkModal}
+              aria-labelledby="simple-modal-cloudlink"
+              aria-describedby="simple-modal-cloudlinkdescript"
+            >
+              {cloudLinkModalBody}
             </Modal>
          </Box>
 }
