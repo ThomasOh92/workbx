@@ -55,13 +55,16 @@ class WebLink extends React.Component {
     render() {
         const dragHandlers = {onStart: this.onStart, onStop: this.onControlledDragStop, onDrag: this.onControlledDrag};
         const controlledPosition = this.state.controlledPosition;
-
+        const show = this.props.show? styles.show : styles.hidden;
+        
         return (
             <Draggable position={controlledPosition} bounds="parent" cancel=".linkypart" {...dragHandlers} >
                 <div className={styles.box}>
 
                 <Card>
+                    <div className={show}>
                     <ClearIcon className={styles.deleteButton} onClick={this.deleteButton}/>
+                    </div>
                     <CardActionArea onClick={()=>{window.open(this.props.title, '_blank')}} >
                         <CardContent className="linkypart">
                         <Typography variant="body2" color="textSecondary" component="p">

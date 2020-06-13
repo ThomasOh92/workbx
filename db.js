@@ -74,6 +74,9 @@ const stickyNotesModelsObject = stickyNotesModelsFunction ( pool );
 
 const webLinksModelsFunction = require('./models/weblinks');
 const webLinksModelsObject = webLinksModelsFunction ( pool );
+
+const cloudLinksModelsFunction = require('./models/cloudlinks');
+const cloudLinksModelsObject = cloudLinksModelsFunction ( pool );
 /*
  * ===================================================
  * ===================================================
@@ -104,5 +107,6 @@ module.exports = {
   pokemon: pokemonModelsObject,
   accounts: accountsModelsObject,
   stickynotes: stickyNotesModelsObject,
-  weblinks: webLinksModelsObject
+  weblinks: webLinksModelsObject,
+  cloudlinks: cloudLinksModelsObject
 };

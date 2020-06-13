@@ -3,7 +3,7 @@ import { makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
-import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 import CloudQueueIcon from '@material-ui/icons/CloudQueue';
 import LinkIcon from '@material-ui/icons/Link';
 import StickyNote from './stickynote';
@@ -14,8 +14,9 @@ import Modal from '@material-ui/core/Modal';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import WebLink from './weblink'
+import WebLink from './weblink';
 import TextField from '@material-ui/core/TextField';
+import CloudLink from './cloudlink';
 
 const useStyles = makeStyles((theme) => ({
   board: {
@@ -23,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2, 2),
     flexGrow: 1,
     backgroundColor: theme.palette.board,
-    position: 'relative'
+    position: 'relative',
+    overflow: 'auto'
   },
   speedDial: {
     position: 'absolute',
@@ -37,6 +39,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#3f51b5',
     bottom: theme.spacing(2),
     left: theme.spacing(2),
+    color: 'white'
+  },
+  dragEditButton: {
+    position: 'absolute',
+    backgroundColor: '#3f51b5',
+    bottom: theme.spacing(2),
+    left: theme.spacing(17),
     color: 'white'
   },
   modal: {
@@ -60,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Board = props => {
   const classes = useStyles();
+  const [showDragAndDelete, setShowDragAndDelete] = React.useState(false)
   //Floating Action Button
   const [open, setOpen] = React.useState(false);
   //Sticky Notes
@@ -71,6 +81,8 @@ const Board = props => {
   const [webLinkIds, setWebLinkIds] = React.useState([]);
   //Cloud Links
   const [openCloudLinkModal, setOpenCloudLinkModal] = React.useState(false);
+  const [cloudLinks, setCloudLinks] = React.useState([]);
+  const [cloudLinkIds, setCloudLinkIds] = React.useState([]);
 
 
   const getStickyNotes = () => {
@@ -81,9 +93,13 @@ const Board = props => {
     return axios.get('./weblinks')
   }
 
+  const getCloudLinks = () => {
+    return axios.get('./cloudlinks')
+  }
+
   useEffect(() => {
 
-    Promise.all([getStickyNotes(), getWebLinks()])
+    Promise.all([getStickyNotes(), getWebLinks(), getCloudLinks()])
     .then((response) => {
       //Sticky Notes
       console.log(response[0].data)
@@ -109,11 +125,27 @@ const Board = props => {
         webLinkIds.push(el.id)
         webLinks.push(newWebLink)
       }
+      //CloudLinks
+      console.log(response[2].data)
+
+      for (let el of response[2].data){
+        let newCloudLink = {
+          id: el.id,
+          link: el.link,
+          position: {x: el.xpos, y: el.ypos},
+          fileName: el.filename,
+          accountName: props.accountName
+        }
+        cloudLinkIds.push(el.id)
+        cloudLinks.push(newCloudLink)
+      }
 
       setWebLinkIds([...webLinkIds])
       setWebLinks([...webLinks])
       setStickyNoteIds([...stickyNoteIds])
       setStickyNotes([...stickyNotes])
+      setCloudLinkIds([...cloudLinkIds])
+      setCloudLinks([...cloudLinks])
 
     }).catch((error)=>{
       console.log(error);
@@ -142,6 +174,7 @@ const Board = props => {
     </div>
   );
   const handleNewWebLink = () => {
+    console.log("newweblinkfired")
     console.log(webLinkFormInput.current.firstChild.value)
     let id = webLinkIds.length + 1;
     
@@ -164,6 +197,8 @@ const Board = props => {
     setOpenWebLinkModal(false);
   }
   const updateWebLinkPosition = (linkid, posObj) => {
+    console.log("PosObj", posObj)
+    console.log("linkid", linkid)
     for (let i = 0; i < webLinks.length; i++){
       if (webLinks[i].id === linkid){
         webLinks[i].position = posObj;
@@ -201,13 +236,47 @@ const Board = props => {
     <div className={classes.modal} >
       <TextField id="cloudfilelink" label="Web Link to File" variant="outlined" ref={cloudLinkFormInput1}/>
       <TextField id="nameoffile" label="File Name" variant="outlined" ref={cloudLinkFormInput2} />
-      <Button type="submit" onClick={()=>{handleNewCloudLink()}}>Submit</Button>
+      <Button onClick={()=>{handleNewCloudLink()}}>Submit</Button>
     </div>
   );
 
   const handleNewCloudLink = () => {
     console.log(cloudLinkFormInput1.current.childNodes[1].firstChild.value)
     console.log(cloudLinkFormInput2.current.childNodes[1].firstChild.value)
+    let id = cloudLinkIds.length + 1;
+    for (let el of cloudLinkIds){
+      if (el === id){
+        id = id * 2;
+      }
+    }
+    let cloudLink = {
+      id,
+      position: {x: 0, y: 0},
+      link: cloudLinkFormInput1.current.childNodes[1].firstChild.value,
+      fileName: cloudLinkFormInput2.current.childNodes[1].firstChild.value,
+      accountName: props.accountName
+    }
+    cloudLinks.push(cloudLink)
+    cloudLinkIds.push(id)
+    setCloudLinkIds([...cloudLinkIds]);
+    setCloudLinks([...cloudLinks]);
+    setOpenCloudLinkModal(false);
+  }
+  const updateCloudLinkPosition = (linkid, posObj) => {
+    for (let i = 0; i < cloudLinks.length; i++){
+      if (cloudLinks[i].id === linkid){
+        cloudLinks[i].position = posObj;
+      }
+    }
+    setCloudLinks([...cloudLinks])
+  }
+  const deleteCloudLink = (linkid) => {
+    for (let i = 0; i < cloudLinks.length; i++){
+      if (cloudLinks[i].id === linkid){
+        cloudLinks.splice(i,1)
+      }
+    }
+    setCloudLinks([...cloudLinks])
   }
 
 
@@ -279,20 +348,33 @@ const Board = props => {
     }, {withCredentials: true})
   }
 
+  const saveCloudLinks = () => {
+    axios.post('/cloudlinks', {
+      cloudLinks: cloudLinks
+    }, {withCredentials: true})
+  }
+
   const saveAll = () => {
     console.log("saving")
-    Promise.all([saveStickyNotes(), saveWebLinks()])
+    Promise.all([saveStickyNotes(), saveWebLinks(), saveCloudLinks()])
       .then(function (results) {
-        console.log(results[0])
+        console.log(results[0]);
         console.log(results[1]);
+        console.log(results[2])
       })
       .catch(error => { 
         console.error(error.message)
       });
   }
 
+  const revealDragAndDelete = () => {
+    console.log("reveal / hide")
+    console.log(showDragAndDelete)
+    setShowDragAndDelete(!showDragAndDelete)
+  }
+
   const actions = [
-    { icon: <NoteAddIcon />, name: `Sticky Note`, click: newStickyNote },
+    { icon: <PostAddIcon />, name: `Sticky Note`, click: newStickyNote },
     { icon: <CloudQueueIcon />, name: 'Cloud Files', click: newCloudLink },
     { icon: <LinkIcon />, name: 'Web Links', click: newWebLink },
     { icon: <DesktopWindowsIcon />, name: 'Local Files', click: newLocalLink }
@@ -300,6 +382,18 @@ const Board = props => {
 
 
   return <Box className={classes.board}>
+            {cloudLinks.map((link) => (
+              <CloudLink key={"cloudlink" + link.id}
+                         id={link.id} 
+                         position={link.position}
+                         updateCloudLinkPosition={(movingLinkId, positionObj)=>{updateCloudLinkPosition(movingLinkId, positionObj)}}
+                         link={link.link}
+                         fileName={link.fileName}
+                         deleteCloudLink={(linkid)=>{deleteCloudLink(linkid)}}
+                         show={showDragAndDelete}
+              />
+            ))}
+            
             {webLinks.map((link) => (
               <WebLink key={"weblink" + link.id} 
                        id={link.id} 
@@ -307,6 +401,7 @@ const Board = props => {
                        title={link.link}
                        deleteWebLink={(linkid)=>{deleteWebLink(linkid)}}
                        updateWebLinkPosition={(movingLinkId, positionObj)=>{updateWebLinkPosition(movingLinkId, positionObj)}}
+                       show={showDragAndDelete}
               />
             ))}
             {stickyNotes.map((note) => ( 
@@ -317,6 +412,7 @@ const Board = props => {
                             deleteStickyNote={(noteid)=>{deleteStickyNote(noteid)}}
                             updatePosition={(movingNoteId, positionObj)=>{updateStickyNotePosition(movingNoteId, positionObj)}}
                             handleContentChange={(textChangeNoteId, text)=>{updateStickyNoteContent(textChangeNoteId, text)}}
+                            show={showDragAndDelete}
                             />
             ))}
             <SpeedDial
@@ -347,6 +443,14 @@ const Board = props => {
               onClick={()=>{saveAll()}}
             >
               Save All
+            </Button>
+            <Button
+              variant="contained"
+              className={classes.dragEditButton}
+              size="small"
+              onClick={()=>{revealDragAndDelete()}}
+            >
+              Drag / Edit
             </Button>
             <Modal
               open={openWebLinkModal}

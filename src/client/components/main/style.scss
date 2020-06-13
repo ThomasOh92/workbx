@@ -9,8 +9,19 @@ body{
   max-width: 345px
 }
 
+.icon{
+  width: fit-content;
+  margin-right: 0;
+  max-width: 75px;
+}
+
 .resizeable{
   resize: both;
+}
+
+.filenames{
+  line-height: 1;
+  margin-top: 5px;
 }
 
 .deleteButton{
@@ -28,4 +39,12 @@ body{
 .textbox:focus{
   outline: none;
   border: none;
+}
+
+.hidden{
+  display:none;
+}
+
+.show{
+  display: default;
 }

@@ -34,4 +34,9 @@ module.exports = (app, allModels) => {
   const webLinkController = require('./controllers/weblinks')(allModels)
   app.get('/weblinks', webLinkController.getWebLinks)
   app.post('/weblinks', webLinkController.saveWebLinks)
+
+  //Cloud Links Controller and Routes
+  const cloudLinkController = require('./controllers/cloudlinks')(allModels)
+  app.get('/cloudlinks', cloudLinkController.getCloudLinks)
+  app.post('/cloudlinks', cloudLinkController.saveCloudLinks)
 };
