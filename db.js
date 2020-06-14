@@ -77,6 +77,9 @@ const webLinksModelsObject = webLinksModelsFunction ( pool );
 
 const cloudLinksModelsFunction = require('./models/cloudlinks');
 const cloudLinksModelsObject = cloudLinksModelsFunction ( pool );
+
+const localLinksModelsFunction = require('./models/locallinks');
+const localLinksModelsObject = localLinksModelsFunction ( pool );
 /*
  * ===================================================
  * ===================================================
@@ -108,5 +111,6 @@ module.exports = {
   accounts: accountsModelsObject,
   stickynotes: stickyNotesModelsObject,
   weblinks: webLinksModelsObject,
-  cloudlinks: cloudLinksModelsObject
+  cloudlinks: cloudLinksModelsObject,
+  locallinks: localLinksModelsObject
 };

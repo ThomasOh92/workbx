@@ -39,4 +39,9 @@ module.exports = (app, allModels) => {
   const cloudLinkController = require('./controllers/cloudlinks')(allModels)
   app.get('/cloudlinks', cloudLinkController.getCloudLinks)
   app.post('/cloudlinks', cloudLinkController.saveCloudLinks)
+
+  //Local Links Controller and Routes
+  const localLinkController = require('./controllers/locallinks')(allModels)
+  app.get('/locallinks', localLinkController.getLocalLinks)
+  app.post('/locallinks', localLinkController.saveLocalLinks)
 };

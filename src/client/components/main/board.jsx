@@ -100,9 +100,13 @@ const Board = props => {
   const getCloudLinks = () => {
     return axios.get('./cloudlinks')
   }
+
+  const getLocalLinks = () => {
+    return axios.get('./locallinks')
+  }
   useEffect(() => {
 
-    Promise.all([getStickyNotes(), getWebLinks(), getCloudLinks()])
+    Promise.all([getStickyNotes(), getWebLinks(), getCloudLinks(), getLocalLinks()])
     .then((response) => {
       //Sticky Notes
       console.log(response[0].data)
@@ -122,6 +126,7 @@ const Board = props => {
         let newWebLink = {
           id: el.id,
           link: el.link,
+          linkName: el.linkname,
           position: {x: el.xpos, y: el.ypos},
           accountName: props.accountName
         }
@@ -142,6 +147,20 @@ const Board = props => {
         cloudLinkIds.push(el.id)
         cloudLinks.push(newCloudLink)
       }
+      //Local Links
+      console.log(response[3].data)
+
+      for (let el of response[3].data){
+        let newLocalLink = {
+          id: el.id,
+          link: el.link,
+          position: {x: el.xpos, y: el.ypos},
+          fileName: el.filename,
+          accountName: props.accountName
+        }
+        localLinkIds.push(el.id)
+        localLinks.push(newLocalLink)
+      }
 
       setWebLinkIds([...webLinkIds])
       setWebLinks([...webLinks])
@@ -149,6 +168,8 @@ const Board = props => {
       setStickyNotes([...stickyNotes])
       setCloudLinkIds([...cloudLinkIds])
       setCloudLinks([...cloudLinks])
+      setLocalLinkIds([...localLinkIds])
+      setLocalLinks([...localLinks])
 
     }).catch((error)=>{
       console.log(error);
@@ -157,7 +178,6 @@ const Board = props => {
 
   //Web link Functions
   const newWebLink = () => {
-    console.log("web");
     handleOpenWebLinkModal()
   }  
   const handleOpenWebLinkModal = () => {
@@ -166,19 +186,16 @@ const Board = props => {
   const handleCloseWebLinkModal = () => {
     setOpenWebLinkModal(false);
   };
-  const webLinkFormInput = useRef(null)
+  const webLinkFormInput1 = useRef(null)
+  const webLinkFormInput2 = useRef(null)
   const webLinkModalBody = (
     <div className={classes.modal} >
-      <FormControl variant="outlined">
-        <InputLabel htmlFor="component-outlined" color="primary">Web Link</InputLabel>
-        <OutlinedInput id="component-outlined" color="primary" label="Web Link" ref={webLinkFormInput} />
-        <Button type="submit" onClick={()=>{handleNewWebLink()}}>Submit</Button>
-      </FormControl>
+      <TextField id="cloudfilelink" label="Web Link" variant="outlined" ref={webLinkFormInput1}/>
+      <TextField id="nameoffile" label="Link Name" variant="outlined" ref={webLinkFormInput2} />
+      <Button onClick={()=>{handleNewWebLink()}}>Submit</Button>
     </div>
   );
   const handleNewWebLink = () => {
-    console.log("newweblinkfired")
-    console.log(webLinkFormInput.current.firstChild.value)
     let id = webLinkIds.length + 1;
     
     for (let el of webLinkIds){
@@ -190,7 +207,8 @@ const Board = props => {
     let link = {
       id,
       position: {x: 0, y: 0},
-      link: webLinkFormInput.current.firstChild.value,
+      linkName: webLinkFormInput2.current.childNodes[1].firstChild.value,
+      link: webLinkFormInput1.current.childNodes[1].firstChild.value,
       accountName: props.accountName
     }
     webLinks.push(link)
@@ -200,7 +218,7 @@ const Board = props => {
     setOpenWebLinkModal(false);
   }
   const updateWebLinkPosition = (linkid, posObj) => {
-    console.log("PosObj", posObj)
+    console.log("Weblink - PosObj", posObj)
     console.log("linkid", linkid)
     for (let i = 0; i < webLinks.length; i++){
       if (webLinks[i].id === linkid){
@@ -221,7 +239,6 @@ const Board = props => {
 
   // Cloud Functions
   const newCloudLink = () => {
-    console.log("cloud")
     handleOpenCloudLinkModal()
   }
   const handleOpenCloudLinkModal = () => {
@@ -241,8 +258,6 @@ const Board = props => {
   );
 
   const handleNewCloudLink = () => {
-    console.log(cloudLinkFormInput1.current.childNodes[1].firstChild.value)
-    console.log(cloudLinkFormInput2.current.childNodes[1].firstChild.value)
     let id = cloudLinkIds.length + 1;
     for (let el of cloudLinkIds){
       if (el === id){
@@ -282,7 +297,6 @@ const Board = props => {
 
   //Local linkks
   const newLocalLink = () => {
-    console.log("local")
     handleOpenLocalLinkModal()
   }
   const handleOpenLocalLinkModal = () => {
@@ -302,8 +316,6 @@ const Board = props => {
   );
 
   const handleNewLocalLink = () => {
-    console.log(localLinkFormInput1.current.childNodes[1].firstChild.value)
-    console.log(localLinkFormInput2.current.childNodes[1].firstChild.value)
     let id = localLinkIds.length + 1;
     for (let el of localLinkIds){
       if (el === id){
@@ -369,7 +381,7 @@ const Board = props => {
     setStickyNotes([...stickyNotes])
   }
   const updateStickyNotePosition = (noteid, posObj) => {
-    console.log("PosObj", posObj)
+    console.log("Sticky Note - PosObj", posObj)
     console.log("noteid", noteid)
     for (let i = 0; i < stickyNotes.length; i++){
       if (stickyNotes[i].id === noteid){
@@ -379,8 +391,6 @@ const Board = props => {
     setStickyNotes([...stickyNotes])
   }
   const updateStickyNoteContent = (noteid, text) => {
-    console.log("text", text)
-    console.log("noteid", noteid)
     for (let i = 0; i < stickyNotes.length; i++){
       if (stickyNotes[i].id === noteid){
         stickyNotes[i].content = text;
@@ -395,26 +405,30 @@ const Board = props => {
       stickyNotes: stickyNotes
     }, {withCredentials: true})
   }
-
   const saveWebLinks= () => {
     axios.post('/weblinks', {
       webLinks: webLinks
     }, {withCredentials: true})
   }
-
   const saveCloudLinks = () => {
     axios.post('/cloudlinks', {
       cloudLinks: cloudLinks
     }, {withCredentials: true})
   }
+  const saveLocalLinks = () => {
+    axios.post('/locallinks', {
+      localLinks: localLinks
+    }, {withCredentials: true})
+  }
 
   const saveAll = () => {
     console.log("saving")
-    Promise.all([saveStickyNotes(), saveWebLinks(), saveCloudLinks()])
+    Promise.all([saveStickyNotes(), saveWebLinks(), saveCloudLinks(), saveLocalLinks()])
       .then(function (results) {
         console.log(results[0]);
         console.log(results[1]);
-        console.log(results[2])
+        console.log(results[2]);
+        console.log(results[3]);
       })
       .catch(error => { 
         console.error(error.message)
@@ -462,8 +476,9 @@ const Board = props => {
             {webLinks.map((link) => (
               <WebLink key={"weblink" + link.id} 
                        id={link.id} 
-                       position={link.position} 
-                       title={link.link}
+                       position={link.position}
+                       linkName={link.linkName} 
+                       link={link.link}
                        deleteWebLink={(linkid)=>{deleteWebLink(linkid)}}
                        updateWebLinkPosition={(movingLinkId, positionObj)=>{updateWebLinkPosition(movingLinkId, positionObj)}}
                        show={showDragAndDelete}

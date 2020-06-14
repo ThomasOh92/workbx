@@ -14,7 +14,7 @@ class StickyNote extends React.Component {
             activeDrags: false,
             controlledPosition: this.props.position
         };
-        console.log(this.state.controlledPosition)
+        console.log("position on construction", this.state.controlledPosition)
         this.onControlledDrag = this.onControlledDrag.bind(this);
         this.onStart = this.onStart.bind(this);
         this.onStop = this.onStop.bind(this);
@@ -24,7 +24,6 @@ class StickyNote extends React.Component {
 
     }
 
-  
     onStart() {
         this.setState({activeDrags: true});
     };

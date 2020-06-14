@@ -17,7 +17,7 @@ module.exports = (db) => {
         console.log(deleteInfo)
 
         for (let el of req.body.webLinks){
-            let insertInfo = await db.weblinks.insertWebLinks(el.link, el.position.x, el.position.y, req.cookies.account_id)
+            let insertInfo = await db.weblinks.insertWebLinks(el.link, el.linkName, el.position.x, el.position.y, req.cookies.account_id)
             console.log(insertInfo)
         }
 

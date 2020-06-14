@@ -66,7 +66,7 @@ class LocalLink extends React.Component {
                     <DescriptionIcon fontSize="large"/>
                     <DesktopWindowsIcon fontSize="small" style={{position: 'absolute', top: 5, right: 5}}/>
                     </IconButton>
-                    <Typography variant="caption" display="block" className={styles.filenames}>
+                    <Typography variant="caption" display="block" className={styles.filenames} style={{lineHeight: 1}}>
                       <Link href={this.props.link} target="_blank" className={styles.filenames}>
                        {this.props.fileName}
                        </Link>

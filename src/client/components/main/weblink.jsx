@@ -3,13 +3,8 @@ import Draggable from 'react-draggable';
 import { FormControl, Input } from '@material-ui/core';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
 import ClearIcon from '@material-ui/icons/Clear';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import LanguageIcon from '@material-ui/icons/Language';
+import { IconButton, Typography, Link} from '@material-ui/core';
 import styles from './style.scss';
 
 class WebLink extends React.Component {
@@ -59,20 +54,19 @@ class WebLink extends React.Component {
         
         return (
             <Draggable position={controlledPosition} bounds="parent" cancel=".linkypart" {...dragHandlers} >
-                <div className={styles.box}>
-
-                <Card>
+                <div className={styles.icon}>
                     <div className={show}>
                     <ClearIcon className={styles.deleteButton} onClick={this.deleteButton}/>
                     </div>
-                    <CardActionArea onClick={()=>{window.open(this.props.title, '_blank')}} >
-                        <CardContent className="linkypart">
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {this.props.title}
-                        </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                </Card>
+                    <IconButton style={{paddingBottom: '5px'}}>
+                    <LanguageIcon fontSize="large"/>
+                    </IconButton>
+                    <Typography variant="caption" display="block" className={styles.filenames} style={{lineHeight: 1}}>
+                      <Link href={this.props.link} target="_blank" className={styles.filenames}>
+                       {this.props.linkName}
+                       </Link>
+                    </Typography>
+
                 </div>
             </Draggable>            
         );
