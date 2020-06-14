@@ -17,6 +17,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import WebLink from './weblink';
 import TextField from '@material-ui/core/TextField';
 import CloudLink from './cloudlink';
+import LocalLink from './locallink';
 
 const useStyles = makeStyles((theme) => ({
   board: {
@@ -83,20 +84,22 @@ const Board = props => {
   const [openCloudLinkModal, setOpenCloudLinkModal] = React.useState(false);
   const [cloudLinks, setCloudLinks] = React.useState([]);
   const [cloudLinkIds, setCloudLinkIds] = React.useState([]);
+  //Local Links
+  const [openLocalLinkModal, setOpenLocalinkModal] = React.useState(false);
+  const [localLinks, setLocalLinks] = React.useState([]);
+  const [localLinkIds, setLocalLinkIds] = React.useState([]);
+  
 
-
+  //Get data from database
   const getStickyNotes = () => {
     return axios.get('./stickynotes')
   }
-
   const getWebLinks = () => {
     return axios.get('./weblinks')
   }
-
   const getCloudLinks = () => {
     return axios.get('./cloudlinks')
   }
-
   useEffect(() => {
 
     Promise.all([getStickyNotes(), getWebLinks(), getCloudLinks()])
@@ -221,15 +224,12 @@ const Board = props => {
     console.log("cloud")
     handleOpenCloudLinkModal()
   }
-
   const handleOpenCloudLinkModal = () => {
     setOpenCloudLinkModal(true);
   };
-
   const handleCloseCloudLinkModal = () => {
     setOpenCloudLinkModal(false);
   };
-
   const cloudLinkFormInput1 = useRef(null)
   const cloudLinkFormInput2 = useRef(null)
   const cloudLinkModalBody = (
@@ -283,6 +283,61 @@ const Board = props => {
   //Local linkks
   const newLocalLink = () => {
     console.log("local")
+    handleOpenLocalLinkModal()
+  }
+  const handleOpenLocalLinkModal = () => {
+    setOpenLocalinkModal(true);
+  };
+  const handleCloseLocalLinkModal = () => {
+    setOpenLocalinkModal(false);
+  };
+  const localLinkFormInput1 = useRef(null)
+  const localLinkFormInput2 = useRef(null)
+  const localLinkModalBody = (
+    <div className={classes.modal} >
+      <TextField id="localfilelink" label="Local Link to File" variant="outlined" ref={localLinkFormInput1}/>
+      <TextField id="nameoflocalfile" label="File Name" variant="outlined" ref={localLinkFormInput2} />
+      <Button onClick={()=>{handleNewLocalLink()}}>Submit</Button>
+    </div>
+  );
+
+  const handleNewLocalLink = () => {
+    console.log(localLinkFormInput1.current.childNodes[1].firstChild.value)
+    console.log(localLinkFormInput2.current.childNodes[1].firstChild.value)
+    let id = localLinkIds.length + 1;
+    for (let el of localLinkIds){
+      if (el === id){
+        id = id * 2;
+      }
+    }
+    let localLink = {
+      id,
+      position: {x: 0, y: 0},
+      link: localLinkFormInput1.current.childNodes[1].firstChild.value,
+      fileName: localLinkFormInput2.current.childNodes[1].firstChild.value,
+      accountName: props.accountName
+    }
+    localLinks.push(localLink)
+    localLinkIds.push(id)
+    setLocalLinkIds([...localLinkIds]);
+    setLocalLinks([...localLinks]);
+    setOpenLocalinkModal(false);
+  }
+  const updateLocalLinkPosition = (linkid, posObj) => {
+    for (let i = 0; i < localLinks.length; i++){
+      if (localLinks[i].id === linkid){
+        localLinks[i].position = posObj;
+      }
+    }
+    setLocalLinks([...localLinks])
+  }
+  const deleteLocalLink = (linkid) => {
+    for (let i = 0; i < localLinks.length; i++){
+      if (localLinks[i].id === linkid){
+        localLinks.splice(i,1)
+      }
+    }
+    setLocalLinks([...localLinks])
   }
 
   //Sticky Note Functions
@@ -335,7 +390,6 @@ const Board = props => {
   }
 
   //Save everything
-
   const saveStickyNotes = () => {
     axios.post('/stickynotes', {
       stickyNotes: stickyNotes
@@ -382,6 +436,17 @@ const Board = props => {
 
 
   return <Box className={classes.board}>
+            {localLinks.map((link) => (
+              <LocalLink key={"locallink" + link.id}
+                         id={link.id} 
+                         position={link.position}
+                         updateLocalLinkPosition={(movingLinkId, positionObj)=>{updateLocalLinkPosition(movingLinkId, positionObj)}}
+                         link={link.link}
+                         fileName={link.fileName}
+                         deleteLocalLink={(linkid)=>{deleteLocalLink(linkid)}}
+                         show={showDragAndDelete}
+              />
+            ))}
             {cloudLinks.map((link) => (
               <CloudLink key={"cloudlink" + link.id}
                          id={link.id} 
@@ -450,7 +515,7 @@ const Board = props => {
               size="small"
               onClick={()=>{revealDragAndDelete()}}
             >
-              Drag / Edit
+              Drag / Delete
             </Button>
             <Modal
               open={openWebLinkModal}
@@ -467,6 +532,14 @@ const Board = props => {
               aria-describedby="simple-modal-cloudlinkdescript"
             >
               {cloudLinkModalBody}
+            </Modal>
+            <Modal
+              open={openLocalLinkModal}
+              onClose={handleCloseLocalLinkModal}
+              aria-labelledby="simple-modal-locallink"
+              aria-describedby="simple-modal-locallinkdescript"
+            >
+              {localLinkModalBody}
             </Modal>
          </Box>
 }

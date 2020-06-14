@@ -13,6 +13,8 @@ body{
   width: fit-content;
   margin-right: 0;
   max-width: 75px;
+  display: flex;
+  flex-direction: column;
 }
 
 .resizeable{
@@ -21,7 +23,8 @@ body{
 
 .filenames{
   line-height: 1;
-  margin-top: 5px;
+  text-align: center;
+  max-width: 75px;
 }
 
 .deleteButton{

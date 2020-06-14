@@ -4,9 +4,9 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import styles from './style.scss';
 import { IconButton, Typography, Link} from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
-import CloudCircleIcon from '@material-ui/icons/CloudCircle';
+import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
 
-class CloudLink extends React.Component {
+class LocalLink extends React.Component {
    
     constructor(props){
         super(props);
@@ -28,7 +28,7 @@ class CloudLink extends React.Component {
     onStop(){
         this.setState({activeDrags: false});
         //push the controlled position up to state in board
-        this.props.updateCloudLinkPosition(this.props.id, this.state.controlledPosition)
+        this.props.updateLocalLinkPosition(this.props.id, this.state.controlledPosition)
     };
   
     onControlledDrag(e, position){
@@ -43,7 +43,7 @@ class CloudLink extends React.Component {
 
     deleteButton(){
         console.log("delete!")
-        this.props.deleteCloudLink(this.props.id)
+        this.props.deleteLocalLink(this.props.id)
     }
     
     preventDefault(event){
@@ -64,7 +64,7 @@ class CloudLink extends React.Component {
                 </div>
                     <IconButton style={{paddingBottom: '5px'}}>
                     <DescriptionIcon fontSize="large"/>
-                    <CloudCircleIcon fontSize="small" style={{position: 'absolute', top: 5, right: 5}}/>
+                    <DesktopWindowsIcon fontSize="small" style={{position: 'absolute', top: 5, right: 5}}/>
                     </IconButton>
                     <Typography variant="caption" display="block" className={styles.filenames}>
                       <Link href={this.props.link} target="_blank" className={styles.filenames}>
@@ -77,5 +77,5 @@ class CloudLink extends React.Component {
     }
 }
 
-export default CloudLink;
+export default LocalLink;
 //consider using something called react resizable
