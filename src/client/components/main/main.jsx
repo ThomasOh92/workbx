@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Menu } from '@material-ui/icons';
-import { AppBar, Toolbar, IconButton, Button, Typography } from '@material-ui/core'
+import { AppBar, Toolbar, IconButton, Button, Typography, Box } from '@material-ui/core'
 import Cookies from 'universal-cookie';
 import Board from './board'
 
@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
   },
   logOut: {
     margin: theme.spacing(1, 1.5),
+  },
+  logo: {
+    border: `2px solid ${theme.palette.divider}`,
+    paddingLeft: '5px',
+    paddingRight: '5px'
   }
 }));
 
@@ -40,8 +45,8 @@ const Main = props => {
                   <IconButton edge="start" aria-label="menu">
                     <Menu />
                   </IconButton>
-                  <Typography variant="h6" >
-                    WorkBx
+                  <Typography variant="h6" className={classes.logo}>
+                    WORK BX  
                   </Typography>
                   <Typography variant="subtitle1" className={classes.toolBarRight} >
                       {props.accountName}

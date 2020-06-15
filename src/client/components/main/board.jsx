@@ -36,17 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
   saveButton: {
     position: 'absolute',
-    backgroundColor: '#3f51b5',
     bottom: theme.spacing(2),
-    left: theme.spacing(2),
-    color: 'white'
+    left: theme.spacing(2)
   },
   dragEditButton: {
     position: 'absolute',
-    backgroundColor: '#3f51b5',
     bottom: theme.spacing(2),
-    left: theme.spacing(17),
-    color: 'white'
+    left: theme.spacing(17)
   },
   modal: {
     position: 'absolute',
@@ -67,8 +63,7 @@ const useStyles = makeStyles((theme) => ({
   navBarHide: {
     position: 'absolute',
     top: theme.spacing(0),
-    right: theme.spacing(0),
-    color: 'white'
+    right: theme.spacing(0)
   }
 }));
 
@@ -520,11 +515,11 @@ const Board = props => {
                     />
                 ))}
             </SpeedDial>
-            <IconButton color="primary" className={classes.navBarHide} aria-label="hide/show navbar" onClick={() => {props.showBar()}}>
+            <IconButton className={classes.navBarHide} aria-label="hide/show navbar" onClick={() => {props.showBar()}}>
               <MenuOpenIcon />
             </IconButton>
             <Button
-              variant="contained"
+              variant="outlined"
               className={classes.saveButton}
               size="small"
               startIcon={<SaveIcon />}
@@ -533,7 +528,7 @@ const Board = props => {
               Save All
             </Button>
             <Button
-              variant="contained"
+              variant="outlined"
               className={classes.dragEditButton}
               size="small"
               onClick={()=>{revealDragAndDelete()}}
