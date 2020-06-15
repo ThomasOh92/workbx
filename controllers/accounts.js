@@ -10,7 +10,7 @@ module.exports = (db) => {
         res.cookie('loggedin', modelRequest.currentSessionCookie)
         res.cookie('accountname', modelRequest.queryResult.accountname)
         res.cookie('account_id', modelRequest.queryResult.id)
-        res.redirect('/registration/users')
+        res.redirect('/')
     } catch (err) {
         console.log(err)
     }
@@ -30,7 +30,7 @@ module.exports = (db) => {
             res.cookie('account_id', modelRequest.queryResult.id)
             res.redirect('/')
         } else {
-            res.send("log in failed, try again?")
+            res.redirect('/')
         }
     } catch (err){
         console.log(err)
