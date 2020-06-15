@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react';
-import { makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
+import React, {useEffect, useRef} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
@@ -11,18 +11,17 @@ import SaveIcon from '@material-ui/icons/Save';
 import axios from 'axios'
 import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
 import Modal from '@material-ui/core/Modal';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 import WebLink from './weblink';
 import TextField from '@material-ui/core/TextField';
 import CloudLink from './cloudlink';
 import LocalLink from './locallink';
+import IconButton from '@material-ui/core/IconButton';
+import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 
 const useStyles = makeStyles((theme) => ({
   board: {
     border: `1px solid ${theme.palette.divider}`,
-    margin: theme.spacing(2, 2),
+    margin: theme.spacing(0, 0),
     flexGrow: 1,
     backgroundColor: theme.palette.board,
     position: 'relative',
@@ -64,6 +63,12 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column'
+  },
+  navBarHide: {
+    position: 'absolute',
+    top: theme.spacing(0),
+    right: theme.spacing(0),
+    color: 'white'
   }
 }));
 
@@ -449,7 +454,7 @@ const Board = props => {
   ];
 
 
-  return <Box className={classes.board}>
+  return <Box className={classes.board} boxShadow={3}>
             {localLinks.map((link) => (
               <LocalLink key={"locallink" + link.id}
                          id={link.id} 
@@ -515,6 +520,9 @@ const Board = props => {
                     />
                 ))}
             </SpeedDial>
+            <IconButton color="primary" className={classes.navBarHide} aria-label="hide/show navbar" onClick={() => {props.showBar()}}>
+              <MenuOpenIcon />
+            </IconButton>
             <Button
               variant="contained"
               className={classes.saveButton}

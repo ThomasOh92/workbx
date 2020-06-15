@@ -1,8 +1,6 @@
 import React from 'react';
 import Draggable from 'react-draggable';
-import { FormControl, Input } from '@material-ui/core';
 import styles from './style.scss';
-import { grey } from '@material-ui/core/colors';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
 import ClearIcon from '@material-ui/icons/Clear';
 

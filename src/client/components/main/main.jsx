@@ -7,7 +7,8 @@ import Board from './board'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    border: `1px solid ${theme.palette.divider}`
+    border: `1px solid ${theme.palette.divider}`,
+    marginBottom: '10px'
   },
   toolBarRight: {
     marginLeft: 'auto',
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const Main = props => {
   const classes = useStyles();
   const cookies = new Cookies();
+  const [showBar, setShowBar] = React.useState(true);
   let logOutHandler = () => {
     console.log("Hello!")
       cookies.remove('loggedin')
@@ -29,8 +31,11 @@ const Main = props => {
       cookies.remove('email')
       props.logOut()
   }
+  const showBarHandle = () => {
+    setShowBar(!showBar)
+  }
   return <>
-            <AppBar position="static" color="default" className={classes.appBar}>
+            <AppBar position="static" color="default" className={classes.appBar} style={{display: showBar? 'flex' : 'none'}}>
               <Toolbar className={classes.toolBar}>
                   <IconButton edge="start" aria-label="menu">
                     <Menu />
@@ -45,7 +50,7 @@ const Main = props => {
               </Toolbar>
               
             </AppBar>
-            <Board accountName={props.accountName}/>
+            <Board accountName={props.accountName} showBar={() => {showBarHandle()}}/>
          </>
     ;
   
