@@ -54,6 +54,12 @@ class LocalLink extends React.Component {
     render() {
         const dragHandlers = {onStart: this.onStart, onStop: this.onControlledDragStop, onDrag: this.onControlledDrag};
         const controlledPosition = this.state.controlledPosition;
+        if (Number.isNaN(controlledPosition.x) || controlledPosition.x > 1500 || controlledPosition.x < -1000){
+            controlledPosition.x = 0;
+        }
+        if (Number.isNaN(controlledPosition.y) || controlledPosition.y > 1000 || controlledPosition.x < -1000){
+            controlledPosition.y = 0;
+        }
         const show = this.props.show? styles.show : styles.hidden;
 
         return (
