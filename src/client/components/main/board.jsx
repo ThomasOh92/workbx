@@ -17,6 +17,7 @@ import CloudLink from './cloudlink';
 import LocalLink from './locallink';
 import IconButton from '@material-ui/core/IconButton';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
   board: {
@@ -35,14 +36,16 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   saveButton: {
-    position: 'absolute',
-    bottom: theme.spacing(2),
-    left: theme.spacing(2)
+    padding: '5px'
+    // position: 'absolute',
+    // bottom: theme.spacing(0),
+    // left: theme.spacing(0)
   },
   dragEditButton: {
-    position: 'absolute',
-    bottom: theme.spacing(2),
-    left: theme.spacing(17)
+    padding: '5px'
+    // position: 'absolute',
+    // bottom: theme.spacing(0),
+    // left: theme.spacing(4)
   },
   modal: {
     position: 'absolute',
@@ -61,10 +64,17 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column'
   },
   navBarHide: {
+    padding: '5px'
+    // position: 'absolute',
+    // bottom: theme.spacing(0),
+    // left: theme.spacing(8)
+  },
+  toolbox:{
     position: 'absolute',
-    top: theme.spacing(0),
-    right: theme.spacing(0)
+    bottom: theme.spacing(2),
+    left: theme.spacing(2)
   }
+
 }));
 
 
@@ -515,26 +525,17 @@ const Board = props => {
                     />
                 ))}
             </SpeedDial>
-            <IconButton className={classes.navBarHide} aria-label="hide/show navbar" onClick={() => {props.showBar()}}>
-              <MenuOpenIcon />
-            </IconButton>
-            <Button
-              variant="outlined"
-              className={classes.saveButton}
-              size="small"
-              startIcon={<SaveIcon />}
-              onClick={()=>{saveAll()}}
-            >
-              Save All
-            </Button>
-            <Button
-              variant="outlined"
-              className={classes.dragEditButton}
-              size="small"
-              onClick={()=>{revealDragAndDelete()}}
-            >
-              Drag / Delete
-            </Button>
+            <Box className={classes.toolbox}>
+              <IconButton className={classes.saveButton} aria-label="savebutton" onClick={() => {saveAll()}}>
+                <SaveIcon fontSize="small"/>
+              </IconButton>
+              <IconButton className={classes.dragEditButton} aria-label="drageditbutton" onClick={() => {revealDragAndDelete()}}>
+                <EditIcon fontSize="small"/>
+              </IconButton>
+              <IconButton className={classes.navBarHide} aria-label="hide/show navbar" onClick={() => {props.showBar()}}>
+                <MenuOpenIcon fontSize="small"/>
+              </IconButton>
+            </Box>
             <Modal
               open={openWebLinkModal}
               onClose={handleCloseWebLinkModal}

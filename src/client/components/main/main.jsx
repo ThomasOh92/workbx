@@ -11,11 +11,12 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '10px'
   },
   toolBarRight: {
-    marginLeft: 'auto',
-    float: 'left'
+    margin: 'auto'
   },
   logOut: {
     margin: theme.spacing(1, 1.5),
+    marginLeft: 'auto',
+    marginRight: 0
   },
   logo: {
     border: `2px solid ${theme.palette.divider}`,
@@ -45,13 +46,10 @@ const Main = props => {
                   <IconButton edge="start" aria-label="menu">
                     <Menu />
                   </IconButton>
-                  <Typography variant="h6" className={classes.logo}>
+                  <Typography variant="overline" className={classes.logo}>
                     WORK BX  
                   </Typography>
-                  <Typography variant="subtitle1" className={classes.toolBarRight} >
-                      {props.accountName}
-                  </Typography>
-                  <Button className={classes.logOut} onClick={() => { logOutHandler() }}>Log Out</Button>
+                  <Button className={classes.logOut}  variant="outlined" size="small" onClick={() => { logOutHandler() }}>Log Out</Button>
               </Toolbar>
               
             </AppBar>
