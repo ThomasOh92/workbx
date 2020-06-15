@@ -36,7 +36,7 @@ const Main = props => {
                     <Menu />
                   </IconButton>
                   <Typography variant="h6" >
-                    Gather
+                    WorkBx
                   </Typography>
                   <Typography variant="subtitle1" className={classes.toolBarRight} >
                       {props.accountName}
