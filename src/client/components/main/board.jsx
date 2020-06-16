@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto'
   },
   speedDial: {
-    position: 'absolute',
+    position: 'fixed',
     '&.MuiSpeedDial-directionUp': {
-      bottom: theme.spacing(2),
-      right: theme.spacing(2),
+      bottom: '30px',
+      right: '30px',
     }
   },
   saveButton: {
@@ -70,9 +70,9 @@ const useStyles = makeStyles((theme) => ({
     // left: theme.spacing(8)
   },
   toolbox:{
-    position: 'absolute',
-    bottom: theme.spacing(2),
-    left: theme.spacing(2)
+    position: 'fixed',
+    bottom: '30px',
+    left: '30px'
   },
   bottomfield:{
     marginTop: '5px',
