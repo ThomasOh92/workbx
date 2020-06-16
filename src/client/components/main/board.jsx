@@ -73,6 +73,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     bottom: theme.spacing(2),
     left: theme.spacing(2)
+  },
+  bottomfield:{
+    marginTop: '5px',
+    marginBottom: '15px'
   }
 
 }));
@@ -200,8 +204,8 @@ const Board = props => {
   const webLinkFormInput2 = useRef(null)
   const webLinkModalBody = (
     <div className={classes.modal} >
-      <TextField id="cloudfilelink" label="Web Link" variant="outlined" ref={webLinkFormInput1}/>
-      <TextField id="nameoffile" label="Link Name" variant="outlined" ref={webLinkFormInput2} />
+      <TextField id="cloudfilelink" label="Web Link" variant="standard" ref={webLinkFormInput1}/>
+      <TextField id="nameoffile" label="Link Name" variant="standard" className={classes.bottomfield} ref={webLinkFormInput2} />
       <Button onClick={()=>{handleNewWebLink()}}>Submit</Button>
     </div>
   );
@@ -261,8 +265,8 @@ const Board = props => {
   const cloudLinkFormInput2 = useRef(null)
   const cloudLinkModalBody = (
     <div className={classes.modal} >
-      <TextField id="cloudfilelink" label="Web Link to File" variant="outlined" ref={cloudLinkFormInput1}/>
-      <TextField id="nameoffile" label="File Name" variant="outlined" ref={cloudLinkFormInput2} />
+      <TextField id="cloudfilelink" label="Web Link To File" variant="standard" ref={cloudLinkFormInput1}/>
+      <TextField id="nameoffile" label="File Name" variant="standard" className={classes.bottomfield} ref={cloudLinkFormInput2} />
       <Button onClick={()=>{handleNewCloudLink()}}>Submit</Button>
     </div>
   );
@@ -319,8 +323,8 @@ const Board = props => {
   const localLinkFormInput2 = useRef(null)
   const localLinkModalBody = (
     <div className={classes.modal} >
-      <TextField id="localfilelink" label="Local Link to File" variant="outlined" ref={localLinkFormInput1}/>
-      <TextField id="nameoflocalfile" label="File Name" variant="outlined" ref={localLinkFormInput2} />
+      <TextField id="localfilelink" label="Local Link to File" variant="standard" ref={localLinkFormInput1}/>
+      <TextField id="nameoflocalfile" label="File Name" variant="standard" className={classes.bottomfield} ref={localLinkFormInput2} />
       <Button onClick={()=>{handleNewLocalLink()}}>Submit</Button>
     </div>
   );
