@@ -1,9 +1,10 @@
-# WORKBX - An experimental project management tool
-Put all the stuff you need in one place 
+# WorkBx - Put all the stuff you need in one place 
 
 Demo - https://workbx.herokuapp.com/
 
-This was a webapp designed to solve a common problem I faced - Whenever I started on a new project, I typically would have my resources all over the place (e.g. 10 links, 3 random files in different cloud storage providers, a sticky note on my desktop, etc.). Furthermore, current project management tools or note taking tpp;s (e.g. Trello, Evernote), didn't have suitable UIs for my needs. Evernote for instance, focused too much on a document style format felt less suited for linking files and websites.
+Please forgive the silly name.
+
+This was a webapp designed to solve a common problem I faced - Whenever I started on a new project, I typically would have my resources all over the place (e.g. 10 links, 3 random files in different clouds, a sticky note on my desktop, etc.). Furthermore, current project management tools or note taking apps (e.g. Trello, Evernote) didn't have suitable UIs. Evernote for instance, focused too much on a document style format that felt less suited for my needs, particularly when it came to linking files and websites.
 
 ## Technologies
 - React (v16)
