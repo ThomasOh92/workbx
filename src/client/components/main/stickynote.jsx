@@ -74,7 +74,7 @@ class StickyNote extends React.Component {
                     <ClearIcon className={styles.deleteButton} onClick={this.deleteButton}/>
                 </div>
                 <textarea className={styles.textbox} 
-                          rows="1"
+                          rows="4"
                           onChange={this.handleContentChange}
                           value={this.props.content}/>
                 </div>

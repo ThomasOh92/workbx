@@ -463,30 +463,7 @@ const Board = props => {
   ];
 
 
-  return <Box className={classes.board} boxShadow={3}>
-            {localLinks.map((link) => (
-              <LocalLink key={"locallink" + link.id}
-                         id={link.id} 
-                         position={link.position}
-                         updateLocalLinkPosition={(movingLinkId, positionObj)=>{updateLocalLinkPosition(movingLinkId, positionObj)}}
-                         link={link.link}
-                         fileName={link.fileName}
-                         deleteLocalLink={(linkid)=>{deleteLocalLink(linkid)}}
-                         show={showDragAndDelete}
-              />
-            ))}
-            {cloudLinks.map((link) => (
-              <CloudLink key={"cloudlink" + link.id}
-                         id={link.id} 
-                         position={link.position}
-                         updateCloudLinkPosition={(movingLinkId, positionObj)=>{updateCloudLinkPosition(movingLinkId, positionObj)}}
-                         link={link.link}
-                         fileName={link.fileName}
-                         deleteCloudLink={(linkid)=>{deleteCloudLink(linkid)}}
-                         show={showDragAndDelete}
-              />
-            ))}
-            
+  return <Box className={classes.board} boxShadow={3}> 
             {webLinks.map((link) => (
               <WebLink key={"weblink" + link.id} 
                        id={link.id} 
@@ -508,6 +485,28 @@ const Board = props => {
                             handleContentChange={(textChangeNoteId, text)=>{updateStickyNoteContent(textChangeNoteId, text)}}
                             show={showDragAndDelete}
                             />
+            ))}
+            {localLinks.map((link) => (
+              <LocalLink key={"locallink" + link.id}
+                         id={link.id} 
+                         position={link.position}
+                         updateLocalLinkPosition={(movingLinkId, positionObj)=>{updateLocalLinkPosition(movingLinkId, positionObj)}}
+                         link={link.link}
+                         fileName={link.fileName}
+                         deleteLocalLink={(linkid)=>{deleteLocalLink(linkid)}}
+                         show={showDragAndDelete}
+              />
+            ))}
+            {cloudLinks.map((link) => (
+              <CloudLink key={"cloudlink" + link.id}
+                         id={link.id} 
+                         position={link.position}
+                         updateCloudLinkPosition={(movingLinkId, positionObj)=>{updateCloudLinkPosition(movingLinkId, positionObj)}}
+                         link={link.link}
+                         fileName={link.fileName}
+                         deleteCloudLink={(linkid)=>{deleteCloudLink(linkid)}}
+                         show={showDragAndDelete}
+              />
             ))}
             <SpeedDial
                 ariaLabel="SpeedDial example"
