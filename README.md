@@ -2,6 +2,11 @@
 
 Demo - https://workbx.herokuapp.com/
 
+![ScreenShot Dark Mode](src/client/images/Screenshot 2020-06-17 at 11.52.39 AM.png)
+![ScreenShot Light Mode](src/client/images/Screenshot 2020-06-17 at 11.55.20 AM.png)
+![Login](src/client/images/Screenshot 2020-06-17 at 12.03.06 PM.png)
+![Registration](src/client/images/Screenshot 2020-06-17 at 12.03.30 PM.png)
+
 Please forgive the silly name.
 
 This was a webapp designed to solve a common problem I faced - Whenever I started on a new project, I typically would have my resources all over the place (e.g. 10 links, 3 random files in different clouds, a sticky note on my desktop, etc.). Furthermore, current project management tools or note taking apps (e.g. Trello, Evernote) didn't have suitable UIs. Evernote for instance, focused too much on a document style format that felt less suited for my needs, particularly when it came to linking files and websites.
