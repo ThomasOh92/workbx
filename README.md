@@ -2,10 +2,10 @@
 
 Demo - https://workbx.herokuapp.com/
 
-![ScreenShot Dark Mode](src/client/images/Screenshot 2020-06-17 at 11.52.39 AM.png)
-![ScreenShot Light Mode](src/client/images/Screenshot 2020-06-17 at 11.55.20 AM.png)
-![Login](src/client/images/Screenshot 2020-06-17 at 12.03.06 PM.png)
-![Registration](src/client/images/Screenshot 2020-06-17 at 12.03.30 PM.png)
+![ScreenShot Dark Mode](src/client/images/Screenshot_dark.png)
+![ScreenShot Light Mode](src/client/images/Screenshot_light.png)
+![Login](src/client/images/login.png)
+![Registration](src/client/images/registration.png)
 
 Please forgive the silly name.
 
