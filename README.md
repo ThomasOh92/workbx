@@ -1,15 +1,15 @@
-# WorkBx - Put all the stuff you need in one place 
+# WorkBx
 
 Demo - https://workbx.herokuapp.com/
+
+Please forgive the silly name.
+
+This was a webapp designed to solve a common problem I faced - Whenever I started on a new project, I typically would have my resources all over the place (e.g. 10 links, 3 random files in different clouds, a sticky note on my desktop, etc.). Furthermore, current project management tools or note taking apps (e.g. Trello, Evernote) didn't have suitable UIs. Evernote for instance, focused too much on a document style format that felt less suited for my needs, particularly when it came to linking files and websites.
 
 ![ScreenShot Dark Mode](src/client/images/Screenshot_dark.png)
 ![ScreenShot Light Mode](src/client/images/Screenshot_light.png)
 ![Login](src/client/images/login.png)
 ![Registration](src/client/images/registration.png)
-
-Please forgive the silly name.
-
-This was a webapp designed to solve a common problem I faced - Whenever I started on a new project, I typically would have my resources all over the place (e.g. 10 links, 3 random files in different clouds, a sticky note on my desktop, etc.). Furthermore, current project management tools or note taking apps (e.g. Trello, Evernote) didn't have suitable UIs. Evernote for instance, focused too much on a document style format that felt less suited for my needs, particularly when it came to linking files and websites.
 
 ## Technologies
 - React (v16)
